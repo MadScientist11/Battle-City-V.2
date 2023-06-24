@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a9028b0380744b7a574e628fd37dddc, type: 3}
+  m_Name: MazeConfig
+  m_EditorClassIdentifier: 
+  MazeSize: {x: 20, y: 20}
+  PathSpread: 12
+  DestructableWallProbability: 0.11
+  FloorCellPrefab: {fileID: 7210454643614016778, guid: 0692c76dc48769647b227a2902eb9cf8, type: 3}
+  WallCellPrefab: {fileID: 7210454643614016778, guid: d0e7ff9dfcb94564dbdab01566fa4793, type: 3}
+  DestructableWallCellPrefab: {fileID: 7210454643614016778, guid: 21eb673b0661ccd4ca9b2ee7366fdb34, type: 3}
+  PlayerBaseCellPrefab: {fileID: 5044611613202275213, guid: 20dc1b3d7f27f154e91a7c699f25c78a, type: 3}
