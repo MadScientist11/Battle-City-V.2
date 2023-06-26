@@ -1,4 +1,5 @@
 using BattleCity.Source.MazeGeneration;
+using BattleCity.Source.PlayerLogic;
 using UnityEngine;
 
 namespace BattleCity.Source.Infrastructure.Services.GameFactory
@@ -7,6 +8,7 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
     {
         MazeView CreateMazeView();
         void CreateMazeCell(CellType cellType, Transform parent, Vector3 position);
-        PlayerView CreatePlayer(Vector3 position);
+        Player CreatePlayer(Vector3 position);
+        Projectile GetOrCreateProjectile(Vector3 position);
     }
 }

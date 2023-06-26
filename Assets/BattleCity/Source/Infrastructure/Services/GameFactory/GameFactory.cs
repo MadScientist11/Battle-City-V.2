@@ -1,6 +1,8 @@
 ﻿using System;
 using BattleCity.Source.MazeGeneration;
+using BattleCity.Source.PlayerLogic;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
@@ -17,8 +19,12 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
     {
         private const string MazeViewPath = "MazeView";
         private const string PlayerPath = "Player";
+        private const string ProjectilePath = "Projectile";
         private IAssetProvider _assetProvider;
         private IObjectResolver _instantiator;
+
+        
+        private ObjectPool<Projectile> _pool;
 
         public GameFactory(IObjectResolver instantiator, IAssetProvider assetProvider)
         {
@@ -30,6 +36,12 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
         {
         }
 
+        public Projectile GetOrCreateProjectile(Vector3 position)
+        {
+            Projectile projectile = InstancePrefabInjected<Projectile>(ProjectilePath, position);
+            return projectile;
+        }
+
         public MazeView CreateMazeView()
         {
             MazeView mazeView = InstancePrefabInjected<MazeView>(MazeViewPath);
@@ -37,8 +49,8 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
             return mazeView;
         }
 
-        public PlayerView CreatePlayer(Vector3 position) => 
-            InstancePrefabInjected<PlayerView>(PlayerPath, position);
+        public Player CreatePlayer(Vector3 position) => 
+            InstancePrefabInjected<Player>(PlayerPath, position);
 
         public void CreateMazeCell(CellType cellType, Transform parent, Vector3 position)
         {
@@ -115,4 +127,6 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
             return instance;
         }
     }
+
+  
 }

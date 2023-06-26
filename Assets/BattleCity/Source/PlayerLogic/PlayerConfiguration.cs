@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BattleCity.Source.Player
+namespace BattleCity.Source.PlayerLogic
 {
     [CreateAssetMenu(menuName = "Configs", fileName = "Configs/Player")]
     public class PlayerConfiguration : ScriptableObject

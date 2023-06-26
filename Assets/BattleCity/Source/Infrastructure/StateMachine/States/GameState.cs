@@ -1,5 +1,6 @@
 using BattleCity.Source.Infrastructure.Services.GameFactory;
 using BattleCity.Source.Infrastructure.Services.MazeService;
+using BattleCity.Source.PlayerLogic;
 using BattleCity.Source.StateMachine;
 using UnityEngine;
 using VContainer;
@@ -22,11 +23,20 @@ namespace BattleCity.Source.Infrastructure.StateMachine.States
             CameraFollow cameraFollow = Object.FindObjectOfType<CameraFollow>();
             IMazeManager mazeManager = _objectResolver.Resolve<IMazeManager>();
             IGameFactory gameFactory = _objectResolver.Resolve<IGameFactory>();
+            IRouteSearch pathfinder = _objectResolver.Resolve<IRouteSearch>();
+            
+            SetUpMaze(mazeManager, gameFactory);
+
+            pathfinder.InitializePathfinding();
+            
+            Player player = gameFactory.CreatePlayer(mazeManager.GetPlayerStartPosition());
+            cameraFollow.SetTarget(player);
+        }
+
+        private void SetUpMaze(IMazeManager mazeManager, IGameFactory gameFactory)
+        {
             mazeManager.CreateMazeModel();
             gameFactory.CreateMazeView();
-
-            PlayerView player = gameFactory.CreatePlayer(mazeManager.GetPlayerStartPosition());
-            cameraFollow.SetTarget(player);
         }
 
         public void Exit()
