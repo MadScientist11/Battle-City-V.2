@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3351440929701223043}
   - component: {fileID: 3821397398435357361}
   - component: {fileID: -2714112753153353558}
+  - component: {fileID: -5271701889056987637}
   m_Layer: 0
   m_Name: DestructableWall
   m_TagString: Untagged
@@ -111,3 +112,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-5271701889056987637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7210454643614016778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4732dcdfdf74ae4b10fbe6c8617e25e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
