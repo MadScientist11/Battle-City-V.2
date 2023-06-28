@@ -159,6 +159,7 @@ MonoBehaviour:
   - {fileID: 780959041}
   _playerConfiguration: {fileID: 11400000, guid: 3f71471eedef9c8438a52a2991c6fe7b, type: 2}
   _mazeConfiguration: {fileID: 11400000, guid: c32f31e4104d6e64eba4e1c5562e3d83, type: 2}
+  _projectileConfiguration: {fileID: 11400000, guid: 73beb1538c12e2b4dbad8f0c2a7cd519, type: 2}
 --- !u!4 &559667224
 Transform:
   m_ObjectHideFlags: 0

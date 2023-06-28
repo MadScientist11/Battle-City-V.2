@@ -15,7 +15,9 @@ MonoBehaviour:
   MazeSize: {x: 20, y: 20}
   PathSpread: 12
   DestructableWallProbability: 0.11
-  FloorCellPrefab: {fileID: 7210454643614016778, guid: 0692c76dc48769647b227a2902eb9cf8, type: 3}
-  WallCellPrefab: {fileID: 7210454643614016778, guid: d0e7ff9dfcb94564dbdab01566fa4793, type: 3}
-  DestructableWallCellPrefab: {fileID: 7210454643614016778, guid: 21eb673b0661ccd4ca9b2ee7366fdb34, type: 3}
-  PlayerBaseCellPrefab: {fileID: 5044611613202275213, guid: 20dc1b3d7f27f154e91a7c699f25c78a, type: 3}
+  TilePresets:
+  - {fileID: 11400000, guid: faefd4ee5922b0544b38cf2b66d8ae7c, type: 2}
+  - {fileID: 11400000, guid: 2fd69cf3be021a24ab84ff7ef411680d, type: 2}
+  - {fileID: 11400000, guid: 2bb143375d724aa408d9f293002b7b4e, type: 2}
+  - {fileID: 11400000, guid: b45de77835af1174f97985c57f11095c, type: 2}
+  TilePrefab: {fileID: 7210454643614016778, guid: 0692c76dc48769647b227a2902eb9cf8, type: 3}

@@ -5,7 +5,7 @@ namespace BattleCity.Source.Infrastructure.Services.MazeService
 {
     public interface IMazeManager : IService
     {
-        MazeCellData[,] Maze { get; }
+        MazeCell[,] Maze { get; }
         void CreateMazeModel();
         Vector3 GetPlayerStartPosition();
     }

@@ -9,9 +9,7 @@ namespace BattleCity.Source.MazeGeneration
         [Range(1,20)] public int PathSpread;
         [Range(0.0f, 1.0f)] public float DestructableWallProbability;
 
-        public GameObject FloorCellPrefab;
-        public GameObject WallCellPrefab;
-        public GameObject DestructableWallCellPrefab;
-        public GameObject PlayerBaseCellPrefab;
+        public TilePreset[] TilePresets;
+        public GameObject TilePrefab;
     }
 }

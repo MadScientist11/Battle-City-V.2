@@ -1,4 +1,5 @@
 using System;
+using BattleCity.Source.Infrastructure.Services;
 using BattleCity.Source.MazeGeneration;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace BattleCity.Source.Infrastructure.EntryPoints
 {
     public interface IMazeGenerator
     {
-        MazeCellData[,] GenerateMaze(MazeConfiguration mazeConfiguration);
+        MazeCell[,] GenerateMaze(CellFactory cellFactory, MazeConfiguration mazeConfiguration);
     }
 
     public class MainEntryPoint : MonoBehaviour

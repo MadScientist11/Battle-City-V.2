@@ -19,38 +19,69 @@ namespace BattleCity.Source.MazeGeneration
         PlayerBase = 3,
     }
 
-    public class MazeCellData
+    public class MazeCell
     {
+        public event  Action<int> OnCellHealthChanged;
+        public event  Action<MazeCell> OnCellTypeChanged;
+        public int Health { get; set; }
         public Vector2Int CellCoords { get; set; }
         public CellType CellType { get; set; }
+
+        public void SetCellType(CellType cellType)
+        {
+            CellType = cellType;
+            OnCellTypeChanged?.Invoke(this);
+        }
+
+        public void SetHealth(int health)
+        {
+            Health = health;
+            if (Health <= 0)
+            {
+                SetCellType(CellType.Floor);
+            }
+            OnCellHealthChanged?.Invoke(health);
+        }
     }
 
 
     public class CellFactory
     {
-        public static MazeCellData CreateCellData(Vector2Int cellCoords, CellType cellType)
+        private readonly TilePreset[] _tilePresets;
+
+        public CellFactory(TilePreset[] tilePresets)
         {
+            _tilePresets = tilePresets;
+        }
+
+        public MazeCell CreateCellData(Vector2Int cellCoords, CellType cellType)
+        {
+            TilePreset tilePreset = _tilePresets.First(x => x.CellType == cellType);
             return cellType switch
             {
-                CellType.Floor => new MazeCellData
+                CellType.Floor => new MazeCell
                 {
-                    CellCoords = cellCoords,
                     CellType = CellType.Floor,
-                },
-                CellType.Wall => new MazeCellData
-                {
                     CellCoords = cellCoords,
+                    Health = tilePreset.Health
+                },
+                CellType.Wall => new MazeCell
+                {
                     CellType = CellType.Wall,
-                },
-                CellType.DestructableWall => new MazeCellData
-                {
                     CellCoords = cellCoords,
+                    Health = tilePreset.Health
+                },
+                CellType.DestructableWall => new MazeCell
+                {
                     CellType = CellType.DestructableWall,
-                },
-                CellType.PlayerBase => new MazeCellData
-                {
                     CellCoords = cellCoords,
+                    Health = tilePreset.Health
+                },
+                CellType.PlayerBase => new MazeCell
+                {
                     CellType = CellType.PlayerBase,
+                    CellCoords = cellCoords,
+                    Health = tilePreset.Health
                 },
                 _ => throw new ArgumentOutOfRangeException(nameof(cellType), cellType, null)
             };
@@ -60,6 +91,29 @@ namespace BattleCity.Source.MazeGeneration
     public class MazeGenerator : IMazeGenerator
     {
         private MazeConfiguration _mazeConfig;
+        private CellFactory _cellFactory;
+        public MazeCell[,] GenerateMaze(CellFactory cellFactory, MazeConfiguration mazeConfiguration)
+        {
+            _mazeConfig = mazeConfiguration;
+            _cellFactory = cellFactory;
+            
+            MazeCell[,] maze = new MazeCell[_mazeConfig.MazeSize.x, _mazeConfig.MazeSize.y];
+            List<Vector2Int> walkablePath = GenerateRandomPath(new Vector2Int(0, 0),
+                new Vector2Int(_mazeConfig.MazeSize.x, _mazeConfig.MazeSize.y), mazeConfiguration.PathSpread);
+
+            for (int i = 0; i < _mazeConfig.MazeSize.x; i++)
+            {
+                for (int j = 0; j < _mazeConfig.MazeSize.y; j++)
+                {
+                    PopulateCells(maze, walkablePath, i, j);
+                }
+            }
+
+
+            maze[0, 0] = _cellFactory.CreateCellData(new Vector2Int(0, 0), CellType.PlayerBase);
+
+            return maze;
+        }
 
         private List<Vector2Int> GenerateRandomPath(Vector2Int start, Vector2Int destination, int spread)
         {
@@ -78,44 +132,22 @@ namespace BattleCity.Source.MazeGeneration
             return path;
         }
 
-
-        public MazeCellData[,] GenerateMaze(MazeConfiguration mazeConfiguration)
-        {
-            _mazeConfig = mazeConfiguration;
-            MazeCellData[,] maze = new MazeCellData[_mazeConfig.MazeSize.x, _mazeConfig.MazeSize.y];
-            List<Vector2Int> walkablePath = GenerateRandomPath(new Vector2Int(0, 0),
-                new Vector2Int(_mazeConfig.MazeSize.x, _mazeConfig.MazeSize.y), mazeConfiguration.PathSpread);
-
-            for (int i = 0; i < _mazeConfig.MazeSize.x; i++)
-            {
-                for (int j = 0; j < _mazeConfig.MazeSize.y; j++)
-                {
-                    PopulateCell(maze, walkablePath, i, j);
-                }
-            }
-
-
-            maze[0, 0] = CellFactory.CreateCellData(new Vector2Int(0, 0), CellType.PlayerBase);
-
-            return maze;
-        }
-
-        private void PopulateCell(MazeCellData[,] maze, List<Vector2Int> walkablePath, int x, int y)
+        private void PopulateCells(MazeCell[,] maze, List<Vector2Int> walkablePath, int x, int y)
         {
             if (walkablePath.Contains(new Vector2Int(x, y)))
             {
                 if (Random.value > 1 - _mazeConfig.DestructableWallProbability)
                 {
-                    maze[x, y] = CellFactory.CreateCellData(new Vector2Int(x, y), CellType.DestructableWall);
+                    maze[x, y] = _cellFactory.CreateCellData(new Vector2Int(x, y), CellType.DestructableWall);
                 }
                 else
                 {
-                    maze[x, y] = CellFactory.CreateCellData(new Vector2Int(x, y), CellType.Floor);
+                    maze[x, y] = _cellFactory.CreateCellData(new Vector2Int(x, y), CellType.Floor);
                 }
             }
             else
             {
-                maze[x, y] = CellFactory.CreateCellData(new Vector2Int(x, y), CellType.Wall);
+                maze[x, y] = _cellFactory.CreateCellData(new Vector2Int(x, y), CellType.Wall);
             }
         }
 

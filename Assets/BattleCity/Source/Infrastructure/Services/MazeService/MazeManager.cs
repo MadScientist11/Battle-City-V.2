@@ -8,9 +8,10 @@ namespace BattleCity.Source.Infrastructure.Services.MazeService
     {
         private readonly IMazeGenerator _mazeGenerator;
         private readonly MazeConfiguration _mazeConfiguration;
-        private MazeCellData[,] _maze;
+        private MazeCell[,] _maze;
+        private CellFactory _cellFactory;
 
-        public MazeCellData[,] Maze => _maze;
+        public MazeCell[,] Maze => _maze;
 
 
         public MazeManager(IMazeGenerator mazeGenerator, MazeConfiguration mazeConfiguration)
@@ -25,8 +26,17 @@ namespace BattleCity.Source.Infrastructure.Services.MazeService
 
         public void CreateMazeModel()
         {
-            _maze = _mazeGenerator.GenerateMaze(_mazeConfiguration);
+            _cellFactory = new CellFactory(_mazeConfiguration.TilePresets);
+
+            _maze = _mazeGenerator.GenerateMaze(_cellFactory, _mazeConfiguration);
         }
+
+
+        public void UpdateMazeCell(Vector2Int coords, MazeCell  cell)
+        {
+            _maze[coords.x, coords.y] = cell;
+        }
+
 
         public Vector3 GetPlayerStartPosition()
         {

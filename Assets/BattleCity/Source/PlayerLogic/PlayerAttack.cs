@@ -6,6 +6,7 @@ namespace BattleCity.Source.PlayerLogic
 {
     public class PlayerAttack : MonoBehaviour
     {
+        [SerializeField] private Transform _playerTransform;
         [SerializeField] private Transform _projectileSpawnPoint;
         private IGameFactory _gameFactory;
 
@@ -18,7 +19,8 @@ namespace BattleCity.Source.PlayerLogic
         {
             if (Input.GetKeyDown("space"))
             {
-                _gameFactory.GetOrCreateProjectile(_projectileSpawnPoint.position);
+                _gameFactory.GetOrCreateProjectile(gameObject, _projectileSpawnPoint.position, 
+                    Quaternion.LookRotation(Vector3.forward, _playerTransform.up));
             }
         }
     }
