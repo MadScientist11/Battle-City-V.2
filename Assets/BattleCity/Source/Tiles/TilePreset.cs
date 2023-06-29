@@ -5,7 +5,9 @@ using UnityEngine;
 public class TilePreset : ScriptableObject
 {
     public CellType CellType;
-    public Sprite Sprite;
     public int Health;
     public Vector2 CellScale;
+    
+    
+    public Sprite Sprite;
 }

@@ -21,27 +21,36 @@ namespace BattleCity.Source.MazeGeneration
 
     public class MazeCell
     {
-        public event  Action<int> OnCellHealthChanged;
-        public event  Action<MazeCell> OnCellTypeChanged;
+        public event Action<int> OnCellHealthChanged;
+        public event Action<MazeCell> OnCellTypeChanged;
         public int Health { get; set; }
         public Vector2 CellScale { get; set; }
         public Vector2Int CellCoords { get; set; }
         public CellType CellType { get; set; }
 
-        public void SetCellType(CellType cellType)
+        private void SetCellType(CellType cellType)
         {
             CellType = cellType;
             OnCellTypeChanged?.Invoke(this);
         }
 
-        public void SetHealth(int health)
+        public void TakeDamage(int amount)
         {
-            Health = health;
+            if (Health <= 0) return;
+            
+            Health -= amount;
             if (Health <= 0)
             {
-                SetCellType(CellType.Floor);
+                ChangeCellToFloor();
             }
-            OnCellHealthChanged?.Invoke(health);
+
+            OnCellHealthChanged?.Invoke(Health);
+        }
+
+        private void ChangeCellToFloor()
+        {
+            SetCellType(CellType.Floor);
+            Health = -1;
         }
     }
 
@@ -72,11 +81,12 @@ namespace BattleCity.Source.MazeGeneration
     {
         private MazeConfiguration _mazeConfig;
         private CellFactory _cellFactory;
+
         public MazeCell[,] GenerateMaze(CellFactory cellFactory, MazeConfiguration mazeConfiguration)
         {
             _mazeConfig = mazeConfiguration;
             _cellFactory = cellFactory;
-            
+
             MazeCell[,] maze = new MazeCell[_mazeConfig.MazeSize.x, _mazeConfig.MazeSize.y];
             List<Vector2Int> walkablePath = GenerateRandomPath(new Vector2Int(0, 0),
                 new Vector2Int(_mazeConfig.MazeSize.x, _mazeConfig.MazeSize.y), mazeConfiguration.PathSpread);

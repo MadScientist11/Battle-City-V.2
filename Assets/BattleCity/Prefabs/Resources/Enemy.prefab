@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1054172509376766812
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5119221112734731380}
+  m_Layer: 0
+  m_Name: ProjectileSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5119221112734731380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054172509376766812}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.58, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1961613857129156950}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1961613855361199923
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,6 +632,7 @@ GameObject:
   - component: {fileID: 1961613857129156950}
   - component: {fileID: 3405866575787522750}
   - component: {fileID: 8295757380783746557}
+  - component: {fileID: -561409195908324416}
   - component: {fileID: 2285504934929449699}
   - component: {fileID: 7103470436760870483}
   m_Layer: 0
@@ -627,6 +659,7 @@ Transform:
   - {fileID: 1961613855759067084}
   - {fileID: 1961613855882469873}
   - {fileID: 1961613855361199932}
+  - {fileID: 5119221112734731380}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -655,6 +688,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _path: {fileID: 7103470436760870483}
+  _stopMask:
+    serializedVersion: 2
+    m_Bits: 49152
+--- !u!114 &-561409195908324416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961613857129156949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 009b6421390644008ec0a5e7de8b1586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _projectileSpawnPoint: {fileID: 5119221112734731380}
 --- !u!114 &2285504934929449699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -672,8 +721,8 @@ MonoBehaviour:
   detailedGizmos: 0
   startEndModifier:
     addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
+    exactStartPoint: 0
+    exactEndPoint: 0
     useRaycasting: 0
     mask:
       serializedVersion: 2
@@ -696,10 +745,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 5
-  radius: 1
-  height: 2
+  radius: 2.5
+  height: 0.01
   canMove: 1
-  maxSpeed: 3
+  maxSpeed: 1
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
     serializedVersion: 2
@@ -714,14 +763,14 @@ MonoBehaviour:
     interval: 0.5
     sensitivity: 10
     maximumInterval: 2
-    visualizeSensitivity: 0
+    visualizeSensitivity: 1
   targetCompatibility: {fileID: 0}
-  maxAcceleration: -2.5
-  rotationSpeed: 1080
+  maxAcceleration: 1
+  rotationSpeed: 1800
   slowdownDistance: 0.6
-  pickNextWaypointDist: 2
-  endReachedDistance: 0.2
-  alwaysDrawGizmos: 0
-  slowWhenNotFacingTarget: 1
+  pickNextWaypointDist: 0.2
+  endReachedDistance: 2
+  alwaysDrawGizmos: 1
+  slowWhenNotFacingTarget: 0
   whenCloseToDestination: 0
   constrainInsideGraph: 1

@@ -7,7 +7,6 @@ using UnityEngine;
 public abstract class TileView : MonoBehaviour
 {
     protected IMazeManager _mazeManager;
-    private MazeConfiguration _mazeConfiguration;
     public MazeCell Cell { get; set; }
     public abstract CellType CellType { get;}
 
@@ -18,7 +17,7 @@ public abstract class TileView : MonoBehaviour
         Cell = cell;
     }
 
-    public abstract void SetHealth(int hp);
+    public abstract void HealthChanged(int hp);
 
 
 

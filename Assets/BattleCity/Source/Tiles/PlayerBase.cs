@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCity.Source;
 using BattleCity.Source.Enemies;
 using BattleCity.Source.MazeGeneration;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class PlayerBase : TileView, ITangible, IDamageable
     public Vector2Int Coords { get; set; }
     public Collider2D Collider2D { get; set; }
     public override CellType CellType => CellType.PlayerBase;
-    public override void SetHealth(int hp)
+    public override void HealthChanged(int hp)
     {
         
     }
@@ -18,7 +19,7 @@ public class PlayerBase : TileView, ITangible, IDamageable
     private void Awake()
     {
         Collider2D = GetComponent<Collider2D>();
-        gameObject.layer = LayerMask.NameToLayer("InteractableTile");
+        gameObject.layer = LayerMask.NameToLayer(GameConstants.Layers.PlayerLayer);
 
         Collider2D.isTrigger = true;
     }

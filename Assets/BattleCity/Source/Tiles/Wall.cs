@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleCity.Source;
 using BattleCity.Source.MazeGeneration;
 using UnityEngine;
 
@@ -11,10 +12,10 @@ public class Wall : TileView, ITangible
 
     private void Awake()
     {
-        gameObject.layer = LayerMask.NameToLayer("InteractableTile");
+        gameObject.layer = LayerMask.NameToLayer(GameConstants.Layers.ObstacleLayer);
     }
 
-    public override void SetHealth(int hp)
+    public override void HealthChanged(int hp)
     {
     }
 }

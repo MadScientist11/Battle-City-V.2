@@ -1,3 +1,4 @@
+using System.Linq;
 using BattleCity.Source.Infrastructure.EntryPoints;
 using BattleCity.Source.MazeGeneration;
 using UnityEngine;
@@ -30,13 +31,6 @@ namespace BattleCity.Source.Infrastructure.Services.MazeService
 
             _maze = _mazeGenerator.GenerateMaze(_cellFactory, _mazeConfiguration);
         }
-
-
-        public void UpdateMazeCell(Vector2Int coords, MazeCell  cell)
-        {
-            _maze[coords.x, coords.y] = cell;
-        }
-
 
         public Vector3 GetPlayerStartPosition()
         {

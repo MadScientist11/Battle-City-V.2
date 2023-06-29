@@ -2,6 +2,7 @@ using BattleCity.Source.Infrastructure.EntryPoints;
 using BattleCity.Source.Infrastructure.Services.EnemyDirector;
 using BattleCity.Source.Infrastructure.Services.GameFactory;
 using BattleCity.Source.Infrastructure.Services.MazeService;
+using BattleCity.Source.Infrastructure.Services.PlayerStatus;
 using BattleCity.Source.MazeGeneration;
 using BattleCity.Source.PlayerLogic;
 using UnityEngine;
@@ -30,6 +31,7 @@ namespace BattleCity.Source.Infrastructure.Scopes
             builder.Register<AssetProvider>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<AStarRouteSearch>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<EnemyDirector>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<PlayerStatusProvider>(Lifetime.Singleton).AsImplementedInterfaces();
         }
 
         private void BindConfigs(IContainerBuilder builder)

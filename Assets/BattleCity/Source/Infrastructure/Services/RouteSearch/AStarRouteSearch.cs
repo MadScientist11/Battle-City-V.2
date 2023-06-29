@@ -35,6 +35,8 @@ public class AStarRouteSearch : IRouteSearch
         graphCollision.mask = _mazeConfig.ObstacleMask;
         graphCollision.use2D = true;
         _pathfinder.data.gridGraph.collision = graphCollision;
+        
+        _pathfinder.logPathResults = PathLog.OnlyErrors;
         _pathfinder.Scan();
     }
 }

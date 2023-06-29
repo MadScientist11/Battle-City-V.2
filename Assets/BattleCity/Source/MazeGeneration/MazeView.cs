@@ -41,7 +41,7 @@ namespace BattleCity.Source.MazeGeneration
                     _mazeTiles[i, j] = _gameFactory
                         .CreateTile(_mazeManager.Maze[i, j], transform);
                     _mazeManager.Maze[i, j].OnCellTypeChanged += ReplaceTile;
-                    _mazeManager.Maze[i, j].OnCellHealthChanged += _mazeTiles[i, j].SetHealth;
+                    _mazeManager.Maze[i, j].OnCellHealthChanged += _mazeTiles[i, j].HealthChanged;
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace BattleCity.Source.MazeGeneration
                 {
                     Destroy(_mazeTiles[i, j].gameObject);
                     _mazeManager.Maze[i, j].OnCellTypeChanged -= ReplaceTile;
-                    _mazeManager.Maze[i, j].OnCellHealthChanged -= _mazeTiles[i, j].SetHealth;
+                    _mazeManager.Maze[i, j].OnCellHealthChanged -= _mazeTiles[i, j].HealthChanged;
 
                 }
             }

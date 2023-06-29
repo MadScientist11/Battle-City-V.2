@@ -19,9 +19,14 @@ namespace BattleCity.Source.PlayerLogic
         {
             if (Input.GetKeyDown("space"))
             {
-                _gameFactory.GetOrCreateProjectile(gameObject, _projectileSpawnPoint.position, 
-                    Quaternion.LookRotation(Vector3.forward, _playerTransform.up));
+                FireProjectile();
             }
+        }
+
+        private void FireProjectile()
+        {
+            _gameFactory.GetOrCreateProjectile(gameObject, _projectileSpawnPoint.position,
+                Quaternion.LookRotation(Vector3.forward, _playerTransform.up));
         }
     }
 }

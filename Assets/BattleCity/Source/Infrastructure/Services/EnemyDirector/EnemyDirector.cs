@@ -36,7 +36,7 @@ namespace BattleCity.Source.Infrastructure.Services.EnemyDirector
                 .Where(x => x.CellType == CellType.Floor)
                 .OrderByDescending(x => x.CellCoords, new Vector2IntComparer());
             
-            List<MazeCell> enemySpawnPoints = freeCells.Take(4).ToList();
+            List<MazeCell> enemySpawnPoints = freeCells.Take(1).ToList();
             
             foreach (MazeCell enemySpawnPoint in enemySpawnPoints)
             {
