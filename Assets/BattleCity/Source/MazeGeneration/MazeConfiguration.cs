@@ -11,5 +11,7 @@ namespace BattleCity.Source.MazeGeneration
 
         public TilePreset[] TilePresets;
         public GameObject TilePrefab;
+
+        public LayerMask ObstacleMask;
     }
 }

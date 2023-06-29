@@ -21,3 +21,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2bb143375d724aa408d9f293002b7b4e, type: 2}
   - {fileID: 11400000, guid: b45de77835af1174f97985c57f11095c, type: 2}
   TilePrefab: {fileID: 7210454643614016778, guid: 0692c76dc48769647b227a2902eb9cf8, type: 3}
+  ObstacleMask:
+    serializedVersion: 2
+    m_Bits: 8192

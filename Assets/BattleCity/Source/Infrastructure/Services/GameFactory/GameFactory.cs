@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using BattleCity.Source.Enemies;
+using BattleCity.Source.Infrastructure.Services.MazeService;
 using BattleCity.Source.MazeGeneration;
 using BattleCity.Source.PlayerLogic;
 using UnityEngine;
@@ -22,6 +24,7 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
         private const string PlayerPath = "Player";
         private const string ProjectilePath = "Projectile";
         private const string TilePath = "Tile";
+        private const string EnemyPath = "Enemy";
 
         private IAssetProvider _assetProvider;
         private IObjectResolver _instantiator;
@@ -29,9 +32,12 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
 
         private ObjectPool<Projectile> _pool;
         private MazeConfiguration _mazeConfiguration;
+        private IMazeManager _mazeManager;
 
-        public GameFactory(IObjectResolver instantiator, IAssetProvider assetProvider, MazeConfiguration mazeConfiguration)
+        public GameFactory(IObjectResolver instantiator, IAssetProvider assetProvider, IMazeManager mazeManager,
+            MazeConfiguration mazeConfiguration)
         {
+            _mazeManager = mazeManager;
             _mazeConfiguration = mazeConfiguration;
             _instantiator = instantiator;
             _assetProvider = assetProvider;
@@ -41,6 +47,7 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
         {
         }
 
+        //TODO: Implement pool
         public Projectile GetOrCreateProjectile(GameObject projectileShooter, Vector3 position, Quaternion rotation)
         {
             Projectile projectile = InstancePrefabInjected<Projectile>(ProjectilePath, position, rotation);
@@ -60,7 +67,8 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
 
         public TileView CreateTile(MazeCell cell, Transform parent)
         {
-            Vector3 position = new Vector3(cell.CellCoords.x, cell.CellCoords.y, 0);
+            Vector3 position = new Vector3(cell.CellCoords.x + cell.CellScale.x/2, cell.CellCoords.y + cell.CellScale.y/2,
+                0);
             Transform tile = InstancePrefab<Transform>(TilePath, parent, position);
             switch (cell.CellType)
             {
@@ -83,14 +91,23 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
             if (tile.TryGetComponent(out TileView tileView))
             {
                 tileView.Initialize(cell);
-                tileView.GetComponent<SpriteRenderer>().sprite = _mazeConfiguration.TilePresets
-                    .First(x => x.CellType == tileView.CellType).Sprite;
+                TilePreset tilePreset = _mazeConfiguration.TilePresets
+                    .First(x => x.CellType == tileView.CellType);
+                tileView.GetComponent<SpriteRenderer>().sprite = tilePreset.Sprite;
+                tileView.transform.localScale = cell.CellScale;
             }
 
             return tileView;
         }
 
-    
+        public Enemy CreateEnemy(Vector2Int cellCoords)
+        {
+            MazeCell mazeCell = _mazeManager.Maze[cellCoords.x, cellCoords.y];
+            Vector3 position = new Vector3(mazeCell.CellCoords.x + mazeCell.CellScale.x/2, mazeCell.CellCoords.y + mazeCell.CellScale.y/2,
+                0);
+            return InstancePrefabInjected<Enemy>(EnemyPath, new Vector3(position.x, position.y, -1));
+        }
+
         private T InstancePrefab<T>(string path) where T : MonoBehaviour
         {
             T asset = _assetProvider.LoadAsset<T>(path);

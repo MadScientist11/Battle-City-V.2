@@ -18,6 +18,8 @@ public class PlayerBase : TileView, ITangible, IDamageable
     private void Awake()
     {
         Collider2D = GetComponent<Collider2D>();
+        gameObject.layer = LayerMask.NameToLayer("InteractableTile");
+
         Collider2D.isTrigger = true;
     }
 

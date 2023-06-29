@@ -24,6 +24,7 @@ namespace BattleCity.Source.MazeGeneration
         public event  Action<int> OnCellHealthChanged;
         public event  Action<MazeCell> OnCellTypeChanged;
         public int Health { get; set; }
+        public Vector2 CellScale { get; set; }
         public Vector2Int CellCoords { get; set; }
         public CellType CellType { get; set; }
 
@@ -57,33 +58,12 @@ namespace BattleCity.Source.MazeGeneration
         public MazeCell CreateCellData(Vector2Int cellCoords, CellType cellType)
         {
             TilePreset tilePreset = _tilePresets.First(x => x.CellType == cellType);
-            return cellType switch
+            return new MazeCell()
             {
-                CellType.Floor => new MazeCell
-                {
-                    CellType = CellType.Floor,
-                    CellCoords = cellCoords,
-                    Health = tilePreset.Health
-                },
-                CellType.Wall => new MazeCell
-                {
-                    CellType = CellType.Wall,
-                    CellCoords = cellCoords,
-                    Health = tilePreset.Health
-                },
-                CellType.DestructableWall => new MazeCell
-                {
-                    CellType = CellType.DestructableWall,
-                    CellCoords = cellCoords,
-                    Health = tilePreset.Health
-                },
-                CellType.PlayerBase => new MazeCell
-                {
-                    CellType = CellType.PlayerBase,
-                    CellCoords = cellCoords,
-                    Health = tilePreset.Health
-                },
-                _ => throw new ArgumentOutOfRangeException(nameof(cellType), cellType, null)
+                CellType = cellType,
+                CellCoords = cellCoords,
+                Health = tilePreset.Health,
+                CellScale = tilePreset.CellScale,
             };
         }
     }

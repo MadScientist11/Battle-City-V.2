@@ -5,5 +5,5 @@ using UnityEngine;
 
 public interface IRouteSearch : IService
 {
-    void InitializePathfinding();
+    void SetUpPathfinding();
 }

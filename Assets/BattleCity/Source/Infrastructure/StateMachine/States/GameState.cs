@@ -1,3 +1,4 @@
+using BattleCity.Source.Infrastructure.Services.EnemyDirector;
 using BattleCity.Source.Infrastructure.Services.GameFactory;
 using BattleCity.Source.Infrastructure.Services.MazeService;
 using BattleCity.Source.PlayerLogic;
@@ -24,13 +25,16 @@ namespace BattleCity.Source.Infrastructure.StateMachine.States
             IMazeManager mazeManager = _objectResolver.Resolve<IMazeManager>();
             IGameFactory gameFactory = _objectResolver.Resolve<IGameFactory>();
             IRouteSearch pathfinder = _objectResolver.Resolve<IRouteSearch>();
-            
+            IEnemyDirector enemyDirector = _objectResolver.Resolve<IEnemyDirector>();
+
             SetUpMaze(mazeManager, gameFactory);
 
-            pathfinder.InitializePathfinding();
-            
+            pathfinder.SetUpPathfinding();
+
             Player player = gameFactory.CreatePlayer(mazeManager.GetPlayerStartPosition());
             cameraFollow.SetTarget(player);
+
+            enemyDirector.PrepareEnemies(player);
         }
 
         private void SetUpMaze(IMazeManager mazeManager, IGameFactory gameFactory)

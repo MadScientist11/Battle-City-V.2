@@ -14,9 +14,11 @@ public class DestructableWall : TileView, ITangible, IDamageable
     }
 
 
-    private void Start()
+    private void Awake()
     {
         Collider2D = GetComponent<Collider2D>();
+        gameObject.layer = LayerMask.NameToLayer("InteractableTile");
+
     }
 
     public void TakeDamage(int amount)

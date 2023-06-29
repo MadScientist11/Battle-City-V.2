@@ -15,3 +15,4 @@ MonoBehaviour:
   CellType: 3
   Sprite: {fileID: 21300000, guid: a919e84fba0aff2429f7355a7cfb217e, type: 3}
   Health: 3
+  CellScale: {x: 1, y: 1}
