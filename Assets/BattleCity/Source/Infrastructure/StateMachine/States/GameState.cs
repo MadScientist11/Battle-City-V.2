@@ -1,6 +1,7 @@
 using BattleCity.Source.Infrastructure.Services.EnemyDirector;
 using BattleCity.Source.Infrastructure.Services.GameFactory;
 using BattleCity.Source.Infrastructure.Services.MazeService;
+using BattleCity.Source.MazeGeneration;
 using BattleCity.Source.PlayerLogic;
 using BattleCity.Source.StateMachine;
 using UnityEngine;
@@ -40,7 +41,11 @@ namespace BattleCity.Source.Infrastructure.StateMachine.States
         private void SetUpMaze(IMazeManager mazeManager, IGameFactory gameFactory)
         {
             mazeManager.CreateMazeModel();
-            gameFactory.CreateMazeView();
+            MazeView mazeView = gameFactory.CreateMazeView();
+            mazeManager.SetView(mazeView);
+        }
+        public void CreateMazeView()
+        {
         }
 
         public void Exit()

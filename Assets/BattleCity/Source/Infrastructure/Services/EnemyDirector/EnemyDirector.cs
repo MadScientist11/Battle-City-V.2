@@ -31,8 +31,7 @@ namespace BattleCity.Source.Infrastructure.Services.EnemyDirector
 
         public void PrepareEnemies(Player player)
         {
-            IEnumerable<MazeCell> freeCells = _mazeManager.Maze
-                .Flatten()
+            IEnumerable<MazeCell> freeCells = _mazeManager.Maze1D
                 .Where(x => x.CellType == CellType.Floor)
                 .OrderByDescending(x => x.CellCoords, new Vector2IntComparer());
             
@@ -43,7 +42,7 @@ namespace BattleCity.Source.Infrastructure.Services.EnemyDirector
                 Vector2Int cellCoords = new Vector2Int(enemySpawnPoint.CellCoords.x, enemySpawnPoint.CellCoords.y);
                 Enemy enemy = _gameFactory.CreateEnemy(cellCoords);
                 _enemies.Add(enemy);
-                enemy.GetComponent<EnemyAI>().SetFollowTarget(player.transform);
+                enemy.GetComponent<EnemyMovement>().SetFollowTarget(player.transform);
             }
         }
     }

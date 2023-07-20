@@ -11,7 +11,8 @@ namespace BattleCity.Source.MazeGeneration
         private IGameFactory _gameFactory;
 
         private MazeCell[,] _maze;
-        private TileView[,] _mazeTiles;
+        public TileView[,] Tiles { get; private set; }
+
         
         private MazeConfiguration _mazeConfiguration;
 
@@ -32,16 +33,16 @@ namespace BattleCity.Source.MazeGeneration
         {
             int rows = _mazeManager.Maze.GetLength(dimension: 0);
             int columns = _mazeManager.Maze.GetLength(dimension: 1);
-            _mazeTiles = new TileView[rows, columns];
+            Tiles = new TileView[rows, columns];
 
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    _mazeTiles[i, j] = _gameFactory
+                    Tiles[i, j] = _gameFactory
                         .CreateTile(_mazeManager.Maze[i, j], transform);
                     _mazeManager.Maze[i, j].OnCellTypeChanged += ReplaceTile;
-                    _mazeManager.Maze[i, j].OnCellHealthChanged += _mazeTiles[i, j].HealthChanged;
+                    _mazeManager.Maze[i, j].OnCellHealthChanged += Tiles[i, j].HealthChanged;
                 }
             }
         }
@@ -54,9 +55,9 @@ namespace BattleCity.Source.MazeGeneration
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    Destroy(_mazeTiles[i, j].gameObject);
+                    Destroy(Tiles[i, j].gameObject);
                     _mazeManager.Maze[i, j].OnCellTypeChanged -= ReplaceTile;
-                    _mazeManager.Maze[i, j].OnCellHealthChanged -= _mazeTiles[i, j].HealthChanged;
+                    _mazeManager.Maze[i, j].OnCellHealthChanged -= Tiles[i, j].HealthChanged;
 
                 }
             }
@@ -64,8 +65,8 @@ namespace BattleCity.Source.MazeGeneration
 
         private void ReplaceTile(MazeCell cell)
         { 
-            Destroy(_mazeTiles[cell.CellCoords.x, cell.CellCoords.y].gameObject);
-            _mazeTiles[cell.CellCoords.x, cell.CellCoords.y] = _gameFactory
+            Destroy(Tiles[cell.CellCoords.x, cell.CellCoords.y].gameObject);
+            Tiles[cell.CellCoords.x, cell.CellCoords.y] = _gameFactory
                 .CreateTile(_mazeManager.Maze[cell.CellCoords.x, cell.CellCoords.y], transform);
         }
     }

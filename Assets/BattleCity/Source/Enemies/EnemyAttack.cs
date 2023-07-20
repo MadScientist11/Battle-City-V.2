@@ -1,6 +1,4 @@
-﻿using System;
-using BattleCity.Source.Infrastructure.Services.GameFactory;
-using UnityEditor.Experimental.GraphView;
+﻿using BattleCity.Source.Infrastructure.Services.GameFactory;
 using UnityEngine;
 using UnityTimer;
 using VContainer;
@@ -11,11 +9,9 @@ namespace BattleCity.Source.Enemies
     {
         [SerializeField] private Transform _projectileSpawnPoint;
 
-        private RaycastHit2D[] _results;
-
         private IGameFactory _gameFactory;
         private Timer _fireTimer;
-        private EnemyAI _enemyAi;
+        private EnemyMovement _enemyMovement;
 
         [Inject]
         public void Construct(IGameFactory gameFactory)
@@ -25,9 +21,7 @@ namespace BattleCity.Source.Enemies
 
         private void Start()
         {
-            _results = new RaycastHit2D[4];
-
-            _enemyAi = GetComponent<EnemyAI>();
+            _enemyMovement = GetComponent<EnemyMovement>();
 
             _fireTimer = Timer.Register(2f, FireProjectile, isLooped: true);
             _fireTimer.Pause();
@@ -35,7 +29,7 @@ namespace BattleCity.Source.Enemies
 
         private void Update()
         {
-            if (_enemyAi.IsInFrontOfTarget)
+            if (_enemyMovement.IsInFrontOfTarget)
             {
                 _fireTimer.Resume();
             }

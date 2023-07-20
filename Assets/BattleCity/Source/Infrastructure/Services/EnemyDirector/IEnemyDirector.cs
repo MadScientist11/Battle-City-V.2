@@ -1,4 +1,5 @@
-﻿using BattleCity.Source.PlayerLogic;
+﻿using BattleCity.Source.MazeGeneration;
+using BattleCity.Source.PlayerLogic;
 
 namespace BattleCity.Source.Infrastructure.Services.EnemyDirector
 {

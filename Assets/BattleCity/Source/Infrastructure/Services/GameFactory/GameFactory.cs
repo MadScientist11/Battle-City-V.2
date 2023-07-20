@@ -67,8 +67,8 @@ namespace BattleCity.Source.Infrastructure.Services.GameFactory
 
         public TileView CreateTile(MazeCell cell, Transform parent)
         {
-            Vector3 position = new Vector3(cell.CellCoords.x + cell.CellScale.x/2, cell.CellCoords.y + cell.CellScale.y/2,
-                0);
+            Vector3 position = _mazeManager.GetCellPosition(cell);
+            
             Transform tile = InstancePrefab<Transform>(TilePath, parent, position);
             switch (cell.CellType)
             {
